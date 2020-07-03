@@ -1,0 +1,130 @@
+:root {
+  --primary-color: #ff7f50;
+  --secondary-color: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--secondary-color);
+}
+
+/* Utilities */
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flex4 {
+  flex: 4;
+}
+
+.flex10 {
+  flex: 10;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.align-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.flex-between {
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.vh100 {
+  height: 100vh;
+}
+.vh10 {
+  height: 10vh;
+}
+.vh90 {
+  height: 90vh;
+}
+
+.border {
+  border: var(--primary-color) 2px solid;
+}
+
+.border-top {
+  border-top: var(--primary-color) 2px solid;
+}
+.border-bottom {
+  border-bottom: var(--primary-color) 2px solid;
+}
+.border-left {
+  border-left: var(--primary-color) 2px solid;
+}
+.border-right {
+  border-right: var(--primary-color) 2px solid;
+}
+
+.p1 {
+  padding: 1rem;
+}
+.pl-1 {
+  padding: 0 0 0 0.25rem;
+}
+
+.flex-start {
+  align-items: stretch;
+}
+.py-1 {
+  padding: 1rem 0;
+}
+.my-1 {
+  margin: 1rem 0;
+}
+.my-2 {
+  margin: 2rem 0;
+}
+
+.mx-1 {
+  margin: 0 1rem;
+}
+
+.ptop-1 {
+  padding-top: 1rem;
+}
+.ptop-3 {
+  padding-top: 3rem;
+}
+
+.btn {
+  background: var(--primary-color);
+  border: var(--secondary-color) 2px solid;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.btn-s {
+  padding: 0.5rem;
+}
+.btn-l {
+  padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.number {
+  width: 15%;
+}

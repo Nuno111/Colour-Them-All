@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Them All | Challenge Yourself</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="flex vh100 border">
+      <aside class="flex border-right flex1 align-center">
+        <div class="flex flex-column p1 flex-between">
+          <div>
+            <h1 class="py-1">Color Them All</h1>
+            <div class="btn btn-s my-2 start">Start Game</div>
+            <div class="btn btn-s my-2 endCurrent">End Current Game</div>
+          </div>
+          <div>
+            <h3 class="py-1">Select Difficulty</h3>
+            <div class="flex">
+              <div class="btn my-1 flex1 btn-l mx-1 easy">Easy</div>
+              <div class="btn my-1 flex1 btn-l mx-1 medium">Medium</div>
+              <div class="btn my-1 flex1 btn-l mx-1 insane">Insane</div>
+            </div>
+          </div>
+          <div class="py-1">
+            <h3>Custom Settings</h3>
+            <hr />
+            <div class="flex ptop-1 flex-center">
+              <label for="clicksLimit"
+                >Allow font colors to match selected colors:&nbsp</label
+              >
+              <input
+                type="checkbox"
+                class="allow-font-change setting"
+                checked
+              />
+            </div>
+            <div class="flex ptop-1">
+              <label for="startingColor">Starting color:&nbsp</label>
+              <input type="color" name="color" class="starting-color setting" />
+              <label for="targetColor" class="pl-1">Target color:&nbsp</label>
+              <input type="color" name="color" class="target-color setting" />
+            </div>
+            <div class="flex flex-between ptop-1">
+              <label for="circles" class="label-circles"></label>
+              <input
+                type="range"
+                id="circles"
+                name="circles"
+                min="1"
+                max="25"
+                class="circles setting"
+              />
+            </div>
+            <div class="flex ptop-1">
+              <label for="clicksLimit"
+                >Clicks limit (between 1 and 100):&nbsp</label
+              >
+              <input
+                type="number"
+                min="1"
+                max="100"
+                class="number setting clicksLimit"
+              />
+            </div>
+            <div class="flex ptop-1">
+              <label for="circleSize"
+                >Circle size (between 1 and 140):&nbsp</label
+              >
+              <input
+                type="number"
+                min="1"
+                max="140"
+                class="number setting circleSize"
+              />
+            </div>
+            <div class="flex ptop-1">
+              <label for="circleSpeed"
+                >Circle speed (between 1 and 10):&nbsp</label
+              >
+              <input
+                type="number"
+                min="1"
+                max="10"
+                class="number setting circleSpeed"
+              />
+            </div>
+
+            <div class="btn btn-s my-1 reset-settings">Reset Settings</div>
+          </div>
+          <footer>Color Them All &copy2020</footer>
+        </div>
+      </aside>
+      <div class="game-board flex4 flex flex-column">
+        <div class="flex border-bottom flex-between flex1">
+          <p class="level border-right flex1"></p>
+          <p class="score border-right flex1"></p>
+          <p class="winScore border-right flex1"></p>
+          <p class="clicks flex1"></p>
+        </div>
+        <canvas class="flex10"></canvas>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
