@@ -1,9 +1,10 @@
-# 
+#
 
-Simple game project to learn html canvas.
+---------- Game project to learn html canvas. ----------
 
+Important: Code is messy at the moment as it´s first version, will need to refactor code once a design patter has been established.
 
-//-- Current functionalities --// 
+//-- Current functionalities --//
 
 Allow user to choose UI colors;
 
@@ -11,19 +12,20 @@ Allow user to set diferent difficulty settings;
 
 Standard difficulty settings are presented to the user;
 
-Increased difficulty with each level;
+Increased difficulty with each new level;
 
-//-- Next implementations --// 
+//-- Upcoming implementations --//
 
-Presets of various different colors design;
+Various presets of different colors design;
 
-"Snitch Circle"  - Similar to harry potter snitches, a high speed, small size circle that has a win condition;
+"Snitch Circle" - Similar to harry potter snitch, a high speed, small size circle that has a win condition;
 
-About section;
-implementations in progress section;
-how to play section;
+"About section";
+
+"Implementations in progress" section;
+
+"How to play" section;
+
+"FAQ" section;
 
 Color Them All 2020.
-
-
-

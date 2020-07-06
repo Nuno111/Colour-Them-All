@@ -108,6 +108,7 @@
       const y = Math.floor(
         Math.random() * (DOM.canvas.height - radius * 2) + radius
       );
+
       const dx = Math.floor(
         plusOrMinus *
           (circlesData.BaseSpeed + Math.random() * circlesData.difficultySpeed)
@@ -286,13 +287,6 @@
     circlesData.difficultySize -= 5;
   };
 
-  const init = () => {
-    resetSettings();
-    createCircles();
-    updateCircles();
-    displayGameInfo();
-  };
-
   const clickedCircle = (e) => {
     // Mouse click coordinates
     const mouseX = e.offsetX;
@@ -327,6 +321,9 @@
       stopAnimation(gameData.animationID);
       clearCircles();
       changeGameStatus();
+      alert(
+        `Congratulations you were able to reached level ${gameData.currentLevel}.`
+      );
     } else {
       alert("Game hasn´t started yet.");
     }
@@ -409,13 +406,42 @@
     displayWinScore();
   };
 
-  init();
+  const validateSettingsInput = (e) => {
+    // Validate Circle Size input
+    if (
+      e.target.classList.contains("circle-size") &&
+      (e.target.value < 0 || e.target.value > 140)
+    ) {
+      alert("Only values between 1 and 140");
+      e.target.value = 90;
+      // Validate Circle Speed input
+    } else if (
+      e.target.classList.contains("circle-speed") &&
+      (e.target.value < 0 || e.target.value > 50)
+    ) {
+      alert("Only values between 1 and 50");
+      e.target.value = 1;
+      // Validate Clicks Limit input
+    } else if (
+      e.target.classList.contains("clicks-limit") &&
+      (e.target.value < 0 || e.target.value > 100)
+    ) {
+      alert("Only values between 1 and 100");
+      e.target.value = 15;
+    }
+  };
+
+  (init = () => {
+    resetSettings();
+    createCircles();
+    updateCircles();
+    displayGameInfo();
+  })();
 
   DOM.startingColor.addEventListener("change", changeCssPrimary);
   DOM.targetColor.addEventListener("change", changeCssSecondary);
   DOM.canvas.addEventListener("click", handleClick);
   DOM.endCurrent.addEventListener("click", endGame);
-
   DOM.resetBtn.addEventListener("click", resetSettings);
   DOM.startBtn.addEventListener("click", startGame);
   DOM.circlesNum.addEventListener("change", updateCircleQty);
@@ -432,4 +458,7 @@
     changeCssPrimary();
     changeCssSecondary();
   });
+  DOM.gameClicks.addEventListener("change", validateSettingsInput);
+  DOM.circleSize.addEventListener("change", validateSettingsInput);
+  DOM.circleSpeed.addEventListener("change", validateSettingsInput);
 })();
