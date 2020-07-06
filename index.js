@@ -3,11 +3,11 @@
     canvas: document.querySelector("canvas"),
     gameBoard: document.querySelector(".game-board"),
     settings: document.querySelectorAll(".setting"),
-    c: document.querySelector("canvas").getContext("2d"),
+    ctx: document.querySelector("canvas").getContext("2d"),
     circlesNum: document.querySelector(".circles"),
-    gameClicks: document.querySelector(".clicksLimit"),
-    circleSize: document.querySelector(".circleSize"),
-    circleSpeed: document.querySelector(".circleSpeed"),
+    gameClicks: document.querySelector(".clicks-limit"),
+    circleSize: document.querySelector(".circle-size"),
+    circleSpeed: document.querySelector(".circle-speed"),
     easy: document.querySelector(".easy"),
     medium: document.querySelector(".medium"),
     insane: document.querySelector(".insane"),
@@ -20,10 +20,11 @@
     level: document.querySelector(".level"),
     label: document.querySelector(".label-circles"),
     score: document.querySelector(".score"),
-    winScore: document.querySelector(".winScore"),
+    winScore: document.querySelector(".win-score"),
     clicks: document.querySelector(".clicks"),
     startingColor: document.querySelector(".starting-color"),
     targetColor: document.querySelector(".target-color"),
+    endCurrent: document.querySelector(".end-current"),
     root: document.documentElement,
     originalCssPrimary: getComputedStyle(document.documentElement)
       .getPropertyValue("--primary-color")
@@ -32,6 +33,8 @@
       .getPropertyValue("--secondary-color")
       .trim(),
     allowFontChange: document.querySelector(".allow-font-change"),
+    resetBtn: document.querySelector(".reset-settings"),
+    startBtn: document.querySelector(".start"),
   };
 
   const gameData = {
@@ -85,9 +88,9 @@
 
     circle.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
 
-    DOM.c.fillStyle = this.color;
+    DOM.ctx.fillStyle = this.color;
 
-    DOM.c.fill(circle);
+    DOM.ctx.fill(circle);
 
     this.id = circle;
   };
@@ -156,7 +159,7 @@
   };
 
   const clearCanvas = () => {
-    DOM.c.clearRect(0, 0, DOM.canvas.width, DOM.canvas.height);
+    DOM.ctx.clearRect(0, 0, DOM.canvas.width, DOM.canvas.height);
   };
 
   const changeCircleColor = (circle) =>
@@ -171,49 +174,29 @@
     gameData.score = 0;
   };
 
-  // need to change all this functions later to a single one with input
-  const setupEasy = () => {
-    if (gameData.gamePlaying) {
-      alert("To change the settings game must not be playing");
-    } else {
-      // Changes input values to a standard difficulty values
-      DOM.gameClicks.value = 15;
-      DOM.circleSize.value = 90;
-      DOM.circleSpeed.value = 1;
-      DOM.circlesNum.value = 5;
-
+  const setupDifficulty = (difficulty) => {
+    if (!gameData.gamePlaying) {
+      if (difficulty === "easy") {
+        DOM.gameClicks.value = 15;
+        DOM.circleSize.value = 90;
+        DOM.circleSpeed.value = 1;
+        DOM.circlesNum.value = 5;
+      } else if (difficulty === "medium") {
+        DOM.gameClicks.value = 10;
+        DOM.circleSize.value = 70;
+        DOM.circleSpeed.value = 2;
+        DOM.circlesNum.value = 7;
+      } else {
+        DOM.gameClicks.value = 8;
+        DOM.circleSize.value = 60;
+        DOM.circleSpeed.value = 5;
+        DOM.circlesNum.value = 10;
+      }
       setupCustomSettings();
       displayGameInfo();
-    }
-  };
-
-  const setupMedium = () => {
-    if (gameData.gamePlaying) {
-      alert("To change the settings game must not be playing");
     } else {
-      // Changes input values to a standard difficulty values
-      DOM.gameClicks.value = 10;
-      DOM.circleSize.value = 70;
-      DOM.circleSpeed.value = 2;
-      DOM.circlesNum.value = 7;
-
-      setupCustomSettings();
-      displayGameInfo();
-    }
-  };
-  const setupInsane = () => {
-    if (gameData.gamePlaying) {
       alert("To change the settings game must not be playing");
-    } else {
-      // Changes input values to a standard difficulty values
-      DOM.gameClicks.value = 8;
-      DOM.circleSize.value = 60;
-      DOM.circleSpeed.value = 5;
-      DOM.circlesNum.value = 10;
     }
-
-    setupCustomSettings();
-    displayGameInfo();
   };
 
   const resetSettings = () => {
@@ -225,7 +208,7 @@
 
       changeCssPrimary();
       changeCssSecondary();
-      setupEasy();
+      setupDifficulty("easy");
     }
   };
 
@@ -258,10 +241,6 @@
     disableSettings();
   };
 
-  const setupNewLevel = () => {
-    nextLevel();
-  };
-
   const animateCircles = () => {
     gameData.animationID = requestAnimationFrame(animateCircles);
 
@@ -271,7 +250,7 @@
 
     // If user won level
     if (gameData.score === circlesData.circleArray.length) {
-      setupNewLevel();
+      nextLevel();
     }
 
     // If user lost game
@@ -320,12 +299,12 @@
 
     const mouseY = e.offsetY;
 
-    // Returns true or false if clicked inside circle or not
+    // Returns true if clicked inside a circle
 
     return circlesData.circleArray.some((circle) => {
       if (
         // If clicked inside a circle && circle is not starting color
-        DOM.c.isPointInPath(circle.id, mouseX, mouseY) &&
+        DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
         circle.color === circlesData.startingColor
       ) {
         changeCircleColor(circle);
@@ -333,7 +312,7 @@
         displayScore();
         return true;
       } else if (
-        DOM.c.isPointInPath(circle.id, mouseX, mouseY) &&
+        DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
         circle.color === circlesData.targetColor
       ) {
         return true;
@@ -362,7 +341,7 @@
       createCircles();
       animateCircles();
     } else {
-      alert("Game in process, please finish it before starting a new one");
+      alert("Game in process, please finish it before starting a new one.");
     }
   };
 
@@ -424,35 +403,33 @@
       .trim();
   };
 
-  init();
-
-  document
-    .querySelector(".starting-color")
-    .addEventListener("change", changeCssPrimary);
-  document
-    .querySelector(".target-color")
-    .addEventListener("change", changeCssSecondary);
-  document.querySelector("canvas").addEventListener("click", handleClick);
-  document.querySelector(".endCurrent").addEventListener("click", endGame);
-  document
-    .querySelector(".reset-settings")
-    .addEventListener("click", resetSettings);
-  document.querySelector(".start").addEventListener("click", startGame);
-  DOM.circlesNum.addEventListener("change", () => {
+  const updateCircleQty = () => {
     circlesData.numCircles = Number(DOM.circlesNum.value);
     displayNumCircles();
     displayWinScore();
+  };
+
+  init();
+
+  DOM.startingColor.addEventListener("change", changeCssPrimary);
+  DOM.targetColor.addEventListener("change", changeCssSecondary);
+  DOM.canvas.addEventListener("click", handleClick);
+  DOM.endCurrent.addEventListener("click", endGame);
+
+  DOM.resetBtn.addEventListener("click", resetSettings);
+  DOM.startBtn.addEventListener("click", startGame);
+  DOM.circlesNum.addEventListener("change", updateCircleQty);
+  DOM.easy.addEventListener("click", () => {
+    setupDifficulty("easy");
   });
-  DOM.easy.addEventListener("click", setupEasy);
-  DOM.medium.addEventListener("click", setupMedium);
-  DOM.insane.addEventListener("click", setupInsane);
+  DOM.medium.addEventListener("click", () => {
+    setupDifficulty("medium");
+  });
+  DOM.insane.addEventListener("click", () => {
+    setupDifficulty("insane");
+  });
   DOM.allowFontChange.addEventListener("click", () => {
-    if (DOM.allowFontChange.checked) {
-      changeCssPrimary();
-      changeCssSecondary();
-    } else {
-      changeCssPrimary();
-      changeCssSecondary();
-    }
+    changeCssPrimary();
+    changeCssSecondary();
   });
 })();

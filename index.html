@@ -13,7 +13,7 @@
           <div>
             <h1 class="py-1">Color Them All</h1>
             <div class="btn btn-s my-2 start">Start Game</div>
-            <div class="btn btn-s my-2 endCurrent">End Current Game</div>
+            <div class="btn btn-s my-2 end-current">End Current Game</div>
           </div>
           <div>
             <h3 class="py-1">Select Difficulty</h3>
@@ -27,7 +27,7 @@
             <h3>Custom Settings</h3>
             <hr />
             <div class="flex ptop-1 flex-center">
-              <label for="clicksLimit"
+              <label for="allow-font-change"
                 >Allow font colors to match selected colors:&nbsp</label
               >
               <input
@@ -37,9 +37,9 @@
               />
             </div>
             <div class="flex ptop-1">
-              <label for="startingColor">Starting color:&nbsp</label>
+              <label for="starting-color">Starting color:&nbsp</label>
               <input type="color" name="color" class="starting-color setting" />
-              <label for="targetColor" class="pl-1">Target color:&nbsp</label>
+              <label for="target-color" class="pl-1">Target color:&nbsp</label>
               <input type="color" name="color" class="target-color setting" />
             </div>
             <div class="flex flex-between ptop-1">
@@ -54,36 +54,36 @@
               />
             </div>
             <div class="flex ptop-1">
-              <label for="clicksLimit"
+              <label for="clicks-limit"
                 >Clicks limit (between 1 and 100):&nbsp</label
               >
               <input
                 type="number"
                 min="1"
                 max="100"
-                class="number setting clicksLimit"
+                class="number setting clicks-limit"
               />
             </div>
             <div class="flex ptop-1">
-              <label for="circleSize"
+              <label for="circle-size"
                 >Circle size (between 1 and 140):&nbsp</label
               >
               <input
                 type="number"
                 min="1"
                 max="140"
-                class="number setting circleSize"
+                class="number setting circle-size"
               />
             </div>
             <div class="flex ptop-1">
-              <label for="circleSpeed"
+              <label for="circle-speed"
                 >Circle speed (between 1 and 10):&nbsp</label
               >
               <input
                 type="number"
                 min="1"
                 max="10"
-                class="number setting circleSpeed"
+                class="number setting circle-speed"
               />
             </div>
 
@@ -96,7 +96,7 @@
         <div class="flex border-bottom flex-between flex1">
           <p class="level border-right flex1"></p>
           <p class="score border-right flex1"></p>
-          <p class="winScore border-right flex1"></p>
+          <p class="win-score border-right flex1"></p>
           <p class="clicks flex1"></p>
         </div>
         <canvas class="flex10"></canvas>
