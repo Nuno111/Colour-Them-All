@@ -322,7 +322,7 @@
       clearCircles();
       changeGameStatus();
       alert(
-        `Congratulations you were able to reached level ${gameData.currentLevel}.`
+        `Congratulations you were able to reach level ${gameData.currentLevel}.`
       );
     } else {
       alert("Game hasn´t started yet.");
