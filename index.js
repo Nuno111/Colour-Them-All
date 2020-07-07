@@ -43,6 +43,26 @@
     currentLevel: undefined,
     animationID: undefined,
     clicksLimit: undefined,
+    difficulty: {
+      easy: {
+        circleSize: 90,
+        circleSpeed: 1,
+        clicksLimit: 15,
+        circlesNum: 5,
+      },
+      medium: {
+        circleSize: 70,
+        circleSpeed: 2,
+        clicksLimit: 10,
+        circlesNum: 7,
+      },
+      insane: {
+        circleSize: 60,
+        circleSpeed: 8,
+        clicksLimit: 10,
+        circlesNum: 10,
+      },
+    },
   };
 
   const circlesData = {
@@ -54,6 +74,15 @@
     numCircles: undefined,
     difficultySpeed: undefined,
     difficultySize: undefined,
+  };
+
+  const validateSettings = {
+    circleSizeInput: (e) =>
+      validateMinMax(0, 140, e, gameData.difficulty.easy.circleSize),
+    circleSpeedInput: (e) =>
+      validateMinMax(0, 50, e, gameData.difficulty.easy.circleSpeed),
+    clicksLimitInput: (e) =>
+      validateMinMax(0, 100, e, gameData.difficulty.easy.clicksLimit),
   };
 
   DOM.canvas.width = DOM.gameBoard.clientWidth;
@@ -123,6 +152,13 @@
     }
   };
 
+  const validateMinMax = (min, max, e, defaultValue) => {
+    if (e.target.value < min || e.target.value > max) {
+      alert(`Only values between ${min} and ${max} are allowed`);
+      e.target.value = defaultValue;
+    }
+  };
+
   const stopAnimation = (id) => cancelAnimationFrame(id);
 
   const displayLevel = () =>
@@ -175,24 +211,15 @@
     gameData.score = 0;
   };
 
-  const setupDifficulty = (difficulty) => {
+  const setupDifficulty = (dif) => {
+    const difficulty = gameData.difficulty[dif];
+
     if (!gameData.gamePlaying) {
-      if (difficulty === "easy") {
-        DOM.gameClicks.value = 15;
-        DOM.circleSize.value = 90;
-        DOM.circleSpeed.value = 1;
-        DOM.circlesNum.value = 5;
-      } else if (difficulty === "medium") {
-        DOM.gameClicks.value = 10;
-        DOM.circleSize.value = 70;
-        DOM.circleSpeed.value = 2;
-        DOM.circlesNum.value = 7;
-      } else {
-        DOM.gameClicks.value = 8;
-        DOM.circleSize.value = 60;
-        DOM.circleSpeed.value = 5;
-        DOM.circlesNum.value = 10;
-      }
+      DOM.gameClicks.value = difficulty.clicksLimit;
+      DOM.circleSize.value = difficulty.circleSize;
+      DOM.circleSpeed.value = difficulty.circleSpeed;
+      DOM.circlesNum.value = difficulty.circlesNum;
+
       setupCustomSettings();
       displayGameInfo();
     } else {
@@ -280,7 +307,7 @@
       circlesData.numCircles += 2;
     }
 
-    if (circlesData.difficultySize <= 50) {
+    if (circlesData.difficultySize <= 35) {
       circlesData.difficultySize = 70;
     }
 
@@ -406,31 +433,6 @@
     displayWinScore();
   };
 
-  const validateSettingsInput = (e) => {
-    // Validate Circle Size input
-    if (
-      e.target.classList.contains("circle-size") &&
-      (e.target.value < 0 || e.target.value > 140)
-    ) {
-      alert("Only values between 1 and 140");
-      e.target.value = 90;
-      // Validate Circle Speed input
-    } else if (
-      e.target.classList.contains("circle-speed") &&
-      (e.target.value < 0 || e.target.value > 50)
-    ) {
-      alert("Only values between 1 and 50");
-      e.target.value = 1;
-      // Validate Clicks Limit input
-    } else if (
-      e.target.classList.contains("clicks-limit") &&
-      (e.target.value < 0 || e.target.value > 100)
-    ) {
-      alert("Only values between 1 and 100");
-      e.target.value = 15;
-    }
-  };
-
   (init = () => {
     resetSettings();
     createCircles();
@@ -458,7 +460,13 @@
     changeCssPrimary();
     changeCssSecondary();
   });
-  DOM.gameClicks.addEventListener("change", validateSettingsInput);
-  DOM.circleSize.addEventListener("change", validateSettingsInput);
-  DOM.circleSpeed.addEventListener("change", validateSettingsInput);
+  DOM.gameClicks.addEventListener("change", (e) =>
+    validateSettings.clicksLimitInput(e)
+  );
+  DOM.circleSize.addEventListener("change", (e) => {
+    validateSettings.circleSizeInput(e);
+  });
+  DOM.circleSpeed.addEventListener("change", (e) => {
+    validateSettings.circleSpeedInput(e);
+  });
 })();
