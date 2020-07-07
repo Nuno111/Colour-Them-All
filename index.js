@@ -63,6 +63,22 @@
         circlesNum: 10,
       },
     },
+    inputLimits: {
+      circleSize: {
+        min: 0,
+        max: 140,
+      },
+
+      circleSpeed: {
+        min: 0,
+        max: 50,
+      },
+
+      clicksLimit: {
+        min: 0,
+        max: 100,
+      },
+    },
   };
 
   const circlesData = {
@@ -78,11 +94,26 @@
 
   const validateSettings = {
     circleSizeInput: (e) =>
-      validateMinMax(0, 140, e, gameData.difficulty.easy.circleSize),
+      validateMinMax(
+        gameData.inputLimits.circleSize.min,
+        gameData.inputLimits.circleSize.max,
+        e,
+        gameData.difficulty.easy.circleSize
+      ),
     circleSpeedInput: (e) =>
-      validateMinMax(0, 50, e, gameData.difficulty.easy.circleSpeed),
+      validateMinMax(
+        gameData.inputLimits.circleSpeed.min,
+        gameData.inputLimits.circleSpeed.max,
+        e,
+        gameData.difficulty.easy.circleSpeed
+      ),
     clicksLimitInput: (e) =>
-      validateMinMax(0, 100, e, gameData.difficulty.easy.clicksLimit),
+      validateMinMax(
+        gameData.inputLimits.clicksLimit.min,
+        gameData.inputLimits.clicksLimit.max,
+        e,
+        gameData.difficulty.easy.clicksLimit
+      ),
   };
 
   DOM.canvas.width = DOM.gameBoard.clientWidth;
@@ -393,6 +424,7 @@
       });
     }
   };
+
   const changeCssPrimary = () => {
     if (DOM.allowFontChange.checked) {
       DOM.root.style.setProperty("--primary-color", DOM.startingColor.value);
