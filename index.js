@@ -11,26 +11,26 @@
     easy: document.querySelector(".easy"),
     medium: document.querySelector(".medium"),
     insane: document.querySelector(".insane"),
-    cssPrimaryColor: getComputedStyle(document.documentElement)
-      .getPropertyValue("--primary-color")
+    cssPrimaryColour: getComputedStyle(document.documentElement)
+      .getPropertyValue("--primary-colour")
       .trim(),
-    cssSecondaryColor: getComputedStyle(document.documentElement)
-      .getPropertyValue("--secondary-color")
+    cssSecondaryColour: getComputedStyle(document.documentElement)
+      .getPropertyValue("--secondary-colour")
       .trim(),
     level: document.querySelector(".level"),
     label: document.querySelector(".label-circles"),
     score: document.querySelector(".score"),
     winScore: document.querySelector(".win-score"),
     clicks: document.querySelector(".clicks"),
-    startingColor: document.querySelector(".starting-color"),
-    targetColor: document.querySelector(".target-color"),
+    startingColour: document.querySelector(".starting-colour"),
+    targetColour: document.querySelector(".target-colour"),
     endCurrent: document.querySelector(".end-current"),
     root: document.documentElement,
     originalCssPrimary: getComputedStyle(document.documentElement)
-      .getPropertyValue("--primary-color")
+      .getPropertyValue("--primary-colour")
       .trim(),
     originalCssSecondary: getComputedStyle(document.documentElement)
-      .getPropertyValue("--secondary-color")
+      .getPropertyValue("--secondary-colour")
       .trim(),
     allowFontChange: document.querySelector(".allow-font-change"),
     resetBtn: document.querySelector(".reset-settings"),
@@ -85,8 +85,8 @@
     circleArray: [],
     BaseSpeed: 2,
     baseSize: 25,
-    startingColor: undefined,
-    targetColor: undefined,
+    startingColour: undefined,
+    targetColour: undefined,
     numCircles: undefined,
     difficultySpeed: undefined,
     difficultySize: undefined,
@@ -126,7 +126,7 @@
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
-    this.color = circlesData.startingColor;
+    this.colour = circlesData.startingColour;
   }
 
   Circle.prototype.update = function () {
@@ -148,7 +148,7 @@
 
     circle.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
 
-    DOM.ctx.fillStyle = this.color;
+    DOM.ctx.fillStyle = this.colour;
 
     DOM.ctx.fill(circle);
 
@@ -230,12 +230,12 @@
     DOM.ctx.clearRect(0, 0, DOM.canvas.width, DOM.canvas.height);
   };
 
-  const changeCircleColor = (circle) =>
-    (circle.color = circlesData.targetColor);
+  const changeCircleColour = (circle) =>
+    (circle.colour = circlesData.targetColour);
 
-  const restartCircleColor = () =>
+  const restartCircleColour = () =>
     circlesData.circleArray.forEach(
-      (circle) => (circle.color = circlesData.startingColor)
+      (circle) => (circle.colour = circlesData.startingColour)
     );
 
   const resetScore = () => {
@@ -262,8 +262,8 @@
     if (gameData.gamePlaying) {
       alert("To change the settings game must not be playing");
     } else {
-      DOM.startingColor.value = DOM.originalCssPrimary;
-      DOM.targetColor.value = DOM.originalCssSecondary;
+      DOM.startingColour.value = DOM.originalCssPrimary;
+      DOM.targetColour.value = DOM.originalCssSecondary;
 
       changeCssPrimary();
       changeCssSecondary();
@@ -278,8 +278,8 @@
     circlesData.difficultySize = Number(DOM.circleSize.value);
     circlesData.difficultySpeed = Number(DOM.circleSpeed.value);
     circlesData.numCircles = Number(DOM.circlesNum.value);
-    circlesData.startingColor = DOM.startingColor.value;
-    circlesData.targetColor = DOM.targetColor.value;
+    circlesData.startingColour = DOM.startingColour.value;
+    circlesData.targetColour = DOM.targetColour.value;
   };
 
   const displayGameInfo = () => {
@@ -355,17 +355,17 @@
 
     return circlesData.circleArray.some((circle) => {
       if (
-        // If clicked inside a circle && circle is not starting color
+        // If clicked inside a circle && circle is not starting colour
         DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
-        circle.color === circlesData.startingColor
+        circle.colour === circlesData.startingColour
       ) {
-        changeCircleColor(circle);
+        changeCircleColour(circle);
         increaseScore();
         displayScore();
         return true;
       } else if (
         DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
-        circle.color === circlesData.targetColor
+        circle.colour === circlesData.targetColour
       ) {
         return true;
       } else {
@@ -403,7 +403,7 @@
   const handleClick = (e) => {
     if (gameData.gamePlaying) {
       if (!clickedCircle(e)) {
-        restartCircleColor();
+        restartCircleColour();
         resetScore();
         decreaseClicks();
         displayClicks();
@@ -427,35 +427,38 @@
 
   const changeCssPrimary = () => {
     if (DOM.allowFontChange.checked) {
-      DOM.root.style.setProperty("--primary-color", DOM.startingColor.value);
+      DOM.root.style.setProperty("--primary-colour", DOM.startingColour.value);
       updateCssPrimary();
     } else {
-      DOM.root.style.setProperty("--primary-color", DOM.originalCssPrimary);
+      DOM.root.style.setProperty("--primary-colour", DOM.originalCssPrimary);
       updateCssPrimary();
-      circlesData.startingColor = DOM.startingColor.value;
+      circlesData.startingColour = DOM.startingColour.value;
     }
   };
 
   const changeCssSecondary = () => {
     if (DOM.allowFontChange.checked) {
-      DOM.root.style.setProperty("--secondary-color", DOM.targetColor.value);
+      DOM.root.style.setProperty("--secondary-colour", DOM.targetColour.value);
       updateCssSecondary();
     } else {
-      DOM.root.style.setProperty("--secondary-color", DOM.originalCssSecondary);
+      DOM.root.style.setProperty(
+        "--secondary-colour",
+        DOM.originalCssSecondary
+      );
       updateCssSecondary();
-      circlesData.startingColor = DOM.targetColor.value;
+      circlesData.startingColour = DOM.targetColour.value;
     }
   };
 
   const updateCssPrimary = () => {
-    DOM.cssPrimaryColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--primary-color")
+    DOM.cssPrimaryColour = getComputedStyle(document.documentElement)
+      .getPropertyValue("--primary-colour")
       .trim();
   };
 
   const updateCssSecondary = () => {
-    DOM.cssSecondaryColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--secondary-color")
+    DOM.cssSecondaryColour = getComputedStyle(document.documentElement)
+      .getPropertyValue("--secondary-colour")
       .trim();
   };
 
@@ -472,8 +475,8 @@
     displayGameInfo();
   })();
 
-  DOM.startingColor.addEventListener("change", changeCssPrimary);
-  DOM.targetColor.addEventListener("change", changeCssSecondary);
+  DOM.startingColour.addEventListener("change", changeCssPrimary);
+  DOM.targetColour.addEventListener("change", changeCssSecondary);
   DOM.canvas.addEventListener("click", handleClick);
   DOM.endCurrent.addEventListener("click", endGame);
   DOM.resetBtn.addEventListener("click", resetSettings);

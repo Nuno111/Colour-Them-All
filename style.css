@@ -1,13 +1,13 @@
 :root {
-  --primary-color: #ff7f50;
-  --secondary-color: #000000;
+  --primary-colour: #ff7f50;
+  --secondary-colour: #000000;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--secondary-color);
+  color: var(--secondary-colour);
 }
 
 /* Utilities */
@@ -60,20 +60,20 @@
 }
 
 .border {
-  border: var(--primary-color) 2px solid;
+  border: var(--primary-colour) 2px solid;
 }
 
 .border-top {
-  border-top: var(--primary-color) 2px solid;
+  border-top: var(--primary-colour) 2px solid;
 }
 .border-bottom {
-  border-bottom: var(--primary-color) 2px solid;
+  border-bottom: var(--primary-colour) 2px solid;
 }
 .border-left {
-  border-left: var(--primary-color) 2px solid;
+  border-left: var(--primary-colour) 2px solid;
 }
 .border-right {
-  border-right: var(--primary-color) 2px solid;
+  border-right: var(--primary-colour) 2px solid;
 }
 
 .p1 {
@@ -108,8 +108,8 @@
 }
 
 .btn {
-  background: var(--primary-color);
-  border: var(--secondary-color) 2px solid;
+  background: var(--primary-colour);
+  border: var(--secondary-colour) 2px solid;
   border-radius: 20px;
   cursor: pointer;
 }
