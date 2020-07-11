@@ -35,6 +35,7 @@
     allowFontChange: document.querySelector(".allow-font-change"),
     resetBtn: document.querySelector(".reset-settings"),
     startBtn: document.querySelector(".start"),
+    buttons: document.querySelectorAll(".btn"),
   };
 
   const gameData = {
@@ -120,13 +121,15 @@
 
   DOM.canvas.height = DOM.canvas.clientHeight;
 
-  function Circle(x, y, dx, dy, radius) {
+  function Circle(x, y, dx, dy, radius, text) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
     this.colour = circlesData.startingColour;
+    this.textColour = circlesData.targetColour;
+    this.text = text;
   }
 
   Circle.prototype.update = function () {
@@ -179,13 +182,15 @@
           (circlesData.BaseSpeed + Math.random() * circlesData.difficultySpeed)
       );
 
-      circlesData.circleArray.push(new Circle(x, y, dx, dy, radius));
+      const text = i + 1;
+
+      circlesData.circleArray.push(new Circle(x, y, dx, dy, radius, text));
     }
   };
 
   const validateMinMax = (min, max, e, defaultValue) => {
     if (e.target.value < min || e.target.value > max) {
-      alert(`Only values between ${min} and ${max} are allowed`);
+      displayMessage(`Only values between ${min} and ${max} are allowed`);
       e.target.value = defaultValue;
     }
   };
@@ -253,15 +258,11 @@
 
       setupCustomSettings();
       displayGameInfo();
-    } else {
-      alert("To change the settings game must not be playing");
     }
   };
 
   const resetSettings = () => {
-    if (gameData.gamePlaying) {
-      alert("To change the settings game must not be playing");
-    } else {
+    if (!gameData.gamePlaying) {
       DOM.startingColour.value = DOM.originalCssPrimary;
       DOM.targetColour.value = DOM.originalCssSecondary;
 
@@ -297,7 +298,8 @@
       gameData.gamePlaying = true;
     }
 
-    disableSettings();
+    changeBtnStatus();
+    changeSettingsStatus();
   };
 
   const animateCircles = () => {
@@ -378,12 +380,11 @@
     if (gameData.gamePlaying) {
       stopAnimation(gameData.animationID);
       clearCircles();
-      changeGameStatus();
-      alert(
+      clearCanvas();
+      displayMessage(
         `Congratulations you were able to reach level ${gameData.currentLevel}.`
       );
-    } else {
-      alert("Game hasn´t started yet.");
+      changeGameStatus();
     }
   };
 
@@ -395,8 +396,6 @@
       clearCircles();
       createCircles();
       animateCircles();
-    } else {
-      alert("Game in process, please finish it before starting a new one.");
     }
   };
 
@@ -409,11 +408,11 @@
         displayClicks();
       }
     } else {
-      alert("You must click the start game button first.");
+      displayMessage("You must click the start game button first.");
     }
   };
 
-  const disableSettings = () => {
+  const changeSettingsStatus = () => {
     if (gameData.gamePlaying) {
       DOM.settings.forEach((setting) => {
         setting.disabled = true;
@@ -423,6 +422,12 @@
         setting.disabled = false;
       });
     }
+  };
+
+  const changeBtnStatus = () => {
+    DOM.buttons.forEach((button) => {
+      button.classList.toggle("btn-active");
+    });
   };
 
   const changeCssPrimary = () => {
@@ -468,6 +473,14 @@
     displayWinScore();
   };
 
+  const displayMessage = (text) => {
+    clearCanvas();
+    DOM.ctx.font = "40px Arial";
+    DOM.ctx.strokeStyle = circlesData.targetColour;
+    DOM.ctx.textAlign = "center";
+    DOM.ctx.strokeText(text, DOM.canvas.width / 2, DOM.canvas.height / 2);
+  };
+
   (init = () => {
     resetSettings();
     createCircles();
@@ -475,22 +488,12 @@
     displayGameInfo();
   })();
 
+  DOM.canvas.addEventListener("click", handleClick);
+
+  //Settings Btns
   DOM.startingColour.addEventListener("change", changeCssPrimary);
   DOM.targetColour.addEventListener("change", changeCssSecondary);
-  DOM.canvas.addEventListener("click", handleClick);
-  DOM.endCurrent.addEventListener("click", endGame);
-  DOM.resetBtn.addEventListener("click", resetSettings);
-  DOM.startBtn.addEventListener("click", startGame);
   DOM.circlesNum.addEventListener("change", updateCircleQty);
-  DOM.easy.addEventListener("click", () => {
-    setupDifficulty("easy");
-  });
-  DOM.medium.addEventListener("click", () => {
-    setupDifficulty("medium");
-  });
-  DOM.insane.addEventListener("click", () => {
-    setupDifficulty("insane");
-  });
   DOM.allowFontChange.addEventListener("click", () => {
     changeCssPrimary();
     changeCssSecondary();
@@ -503,5 +506,37 @@
   });
   DOM.circleSpeed.addEventListener("change", (e) => {
     validateSettings.circleSpeedInput(e);
+  });
+
+  //Btn listeners
+  DOM.endCurrent.addEventListener("click", () => {
+    if (DOM.endCurrent.classList.contains("btn-active")) {
+      endGame();
+    }
+  });
+  DOM.resetBtn.addEventListener("click", () => {
+    if (DOM.resetBtn.classList.contains("btn-active")) {
+      resetSettings();
+    }
+  });
+  DOM.startBtn.addEventListener("click", () => {
+    if (DOM.startBtn.classList.contains("btn-active")) {
+      startGame();
+    }
+  });
+  DOM.easy.addEventListener("click", () => {
+    if (DOM.easy.classList.contains("btn-active")) {
+      setupDifficulty("easy");
+    }
+  });
+  DOM.medium.addEventListener("click", () => {
+    if (DOM.medium.classList.contains("btn-active")) {
+      setupDifficulty("medium");
+    }
+  });
+  DOM.insane.addEventListener("click", () => {
+    if (DOM.insane.classList.contains("btn-active")) {
+      setupDifficulty("insane");
+    }
   });
 })();

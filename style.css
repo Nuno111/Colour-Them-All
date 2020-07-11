@@ -112,6 +112,11 @@
   border: var(--secondary-colour) 2px solid;
   border-radius: 20px;
   cursor: pointer;
+  opacity: 0.5;
+}
+
+.btn-active {
+  opacity: 1;
 }
 
 .btn-s {
@@ -121,7 +126,7 @@
   padding: 0.5rem 1rem;
 }
 
-.btn:hover {
+.btn-active:hover {
   opacity: 0.8;
 }
 
