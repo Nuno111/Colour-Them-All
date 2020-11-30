@@ -290,11 +290,8 @@
   };
 
   const changeGameStatus = () => {
-    if (gameData.gamePlaying) {
-      gameData.gamePlaying = false;
-    } else {
-      gameData.gamePlaying = true;
-    }
+    
+    gameData.gamePlaying = !gameData.gamePlaying
 
     changeBtnStatus();
     changeSettingsStatus();
