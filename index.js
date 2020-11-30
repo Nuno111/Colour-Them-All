@@ -350,13 +350,18 @@
 
     const circle = circlesData.circleArray.find(circle => DOM.ctx.isPointInPath(circle.id, mouseX, mouseY))
 
-    const isSameColor = circle.colour === circlesData.startingColour;
-
     if (circle === undefined) {
       return false;
     } else {
-      return true, isSameColor, circle;
+      const isSameColour = circle.colour === circlesData.startingColour;
+      
+      return {
+        clickedACircle : true,
+        isSameColour : isSameColour,
+        circle : circle
+      }
     }
+
   };
 
   const endGame = () => {
@@ -386,18 +391,16 @@
     if (gameData.gamePlaying) {
       clickData = getClickData(e);
 
-      clickedACircle = clickData[0];
-      isSameColor = clickData[1];
-      circle = clickData[2];
+      console.log(clickData)
 
-      if (!clickedACircle) {
+      if (!clickData.clickedACircle) {
         restartCircleColour();
         resetScore();
         decreaseClicks();
         displayClicks();
       } else {
-        if (!isSameColor) {
-          changeCircleColour(circle);
+        if (clickData.isSameColour) {
+          changeCircleColour(clickData.circle);
           increaseScore();
           displayScore();
         }
