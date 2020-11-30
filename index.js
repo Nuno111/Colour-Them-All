@@ -408,15 +408,8 @@
   };
 
   const changeSettingsStatus = () => {
-    if (gameData.gamePlaying) {
-      DOM.settings.forEach((setting) => {
-        setting.disabled = true;
-      });
-    } else {
-      DOM.settings.forEach((setting) => {
-        setting.disabled = false;
-      });
-    }
+    // Toggles settings buttons active status, depending on state of the game.
+    DOM.settings.forEach((setting) => setting.disabled = gameData.gamePlaying)
   };
 
   const changeBtnStatus = () => {
