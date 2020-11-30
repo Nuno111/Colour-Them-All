@@ -348,7 +348,7 @@
 
     const mouseY = e.offsetY;
 
-    const circle = circleData.circleArray.find(circle => DOM.ctx.isPointInPath(circle.id, mouseX, mouseY))
+    const circle = circlesData.circleArray.find(circle => DOM.ctx.isPointInPath(circle.id, mouseX, mouseY))
 
     const isSameColor = circle.colour === circlesData.startingColour;
 
