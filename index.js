@@ -342,33 +342,21 @@
     circlesData.difficultySize -= 5;
   };
 
-  const clickedCircle = (e) => {
+  const getClickData = (e) => {
     // Mouse click coordinates
     const mouseX = e.offsetX;
 
     const mouseY = e.offsetY;
 
-    // Returns true if clicked inside a circle
+    const circle = circleData.circleArray.find(circle => DOM.ctx.isPointInPath(circle.id, mouseX, mouseY))
 
-    return circlesData.circleArray.some((circle) => {
-      if (
-        // If clicked inside a circle && circle is not starting colour
-        DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
-        circle.colour === circlesData.startingColour
-      ) {
-        changeCircleColour(circle);
-        increaseScore();
-        displayScore();
-        return true;
-      } else if (
-        DOM.ctx.isPointInPath(circle.id, mouseX, mouseY) &&
-        circle.colour === circlesData.targetColour
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    });
+    const isSameColor = circle.colour === circlesData.startingColour;
+
+    if (circle === undefined) {
+      return false;
+    } else {
+      return true, isSameColor, circle;
+    }
   };
 
   const endGame = () => {
@@ -396,11 +384,23 @@
 
   const handleClick = (e) => {
     if (gameData.gamePlaying) {
-      if (!clickedCircle(e)) {
+      clickData = getClickData(e);
+
+      clickedACircle = clickData[0];
+      isSameColor = clickData[1];
+      circle = clickData[2];
+
+      if (!clickedACircle) {
         restartCircleColour();
         resetScore();
         decreaseClicks();
         displayClicks();
+      } else {
+        if (!isSameColor) {
+          changeCircleColour(circle);
+          increaseScore();
+          displayScore();
+        }
       }
     } else {
       displayMessage("You must click the start game button first.");
