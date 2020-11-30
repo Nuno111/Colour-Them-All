@@ -195,8 +195,6 @@
     }
   };
 
-  const stopAnimation = (id) => cancelAnimationFrame(id);
-
   const displayLevel = () =>
     (DOM.level.textContent = `Current level: ${gameData.currentLevel}`);
 
@@ -321,7 +319,7 @@
   };
 
   const nextLevel = () => {
-    stopAnimation(gameData.animationID); // Animation must be stopped before creating new circles
+    cancelAnimationFrame(gameData.animationID); // Animation must be stopped before creating new circles
     resetScore();
     increaseLevel();
     updateDifficulty();
@@ -378,7 +376,7 @@
 
   const endGame = () => {
     if (gameData.gamePlaying) {
-      stopAnimation(gameData.animationID);
+      cancelAnimationFrame(gameData.animationID);
       clearCircles();
       clearCanvas();
       displayMessage(
