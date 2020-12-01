@@ -82,6 +82,7 @@
     },
   };
 
+  // Keep track of created circles and their settings so we can reference them as needed.
   const circlesData = {
     circleArray: [],
     BaseSpeed: 2,
@@ -93,6 +94,7 @@
     difficultySize: undefined,
   };
 
+  // Checking for correct usage, only appropriate values are allowed.
   const validateSettings = {
     circleSizeInput: (e) =>
       validateMinMax(
@@ -121,42 +123,48 @@
 
   DOM.canvas.height = DOM.canvas.clientHeight;
 
-  function Circle(x, y, dx, dy, radius, text) {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = radius;
-    this.colour = circlesData.startingColour;
-    this.textColour = circlesData.targetColour;
-    this.text = text;
+  class Circle {
+    constructor(x, y, dx, dy, radius, text) {
+      this.x = x;
+      this.y = y;
+      this.dx = dx;
+      this.dy = dy;
+      this.radius = radius;
+      this.colour = circlesData.startingColour;
+      this.textColour = circlesData.targetColour;
+      this.text = text;
+    }
+
+    // Updates X and Y coordinates and calls the draw function. Aka allows circles to "move"
+    update() {
+      if (this.x + this.radius > DOM.canvas.width || this.x - this.radius < 0) {
+        this.dx = -this.dx;
+      }
+      if (this.y + this.radius > DOM.canvas.height || this.y - this.radius < 0) {
+        this.dy = -this.dy;
+      }
+
+      this.x += this.dx;
+      this.y += this.dy;
+
+      this.draw();
+    }
+
+    // Draw a circle
+    draw() {
+      const circle = new Path2D();
+
+      circle.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+      DOM.ctx.fillStyle = this.colour;
+
+      DOM.ctx.fill(circle);
+
+      this.id = circle;
+    }
   }
 
-  Circle.prototype.update = function () {
-    if (this.x + this.radius > DOM.canvas.width || this.x - this.radius < 0) {
-      this.dx = -this.dx;
-    }
-    if (this.y + this.radius > DOM.canvas.height || this.y - this.radius < 0) {
-      this.dy = -this.dy;
-    }
 
-    this.x += this.dx;
-    this.y += this.dy;
-
-    this.draw();
-  };
-
-  Circle.prototype.draw = function () {
-    const circle = new Path2D();
-
-    circle.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-
-    DOM.ctx.fillStyle = this.colour;
-
-    DOM.ctx.fill(circle);
-
-    this.id = circle;
-  };
 
   const createCircles = () => {
     for (let i = 0; i < circlesData.numCircles; i++) {
