@@ -1,35 +1,27 @@
 #
 
----------- Game project to learn html canvas. ----------
+Project to learn html canvas
 
-Important: Code is not optimized at the moment as it´s first version, will need to refactor code once a design patter has been established; Works only in computer browsers, mobile support in next version.
+No mobile support yet.
 
-Current bugs: If the window is resized, page has to be refreshed in order for the canvas to get the correct width and height.
+Current bugs: If the window is resized, page has to be refreshed manually in order for the canvas to get the correct width and height.
 
-//-- Current functionalities --//
+Current functionalities:
 
-Allow user to choose UI colors;
+Allow user to choose UI colors.
 
-Allow user to set diferent difficulty settings;
+Allow user to set diferent difficulty settings.
 
-Standard difficulty settings are presented to the user;
+Increased difficulty with each new level.
 
-Increased difficulty with each new level;
+Upcoming implementations:
 
-//-- Upcoming implementations --//
+Mobile Support.
 
-Mobile Support
+Various presets of different UI colors design.
 
-Various presets of different colors design;
+"Snitch Circle" - Similar to harry potter snitch, a high speed, small size circle that has a win condition.
 
-"Snitch Circle" - Similar to harry potter snitch, a high speed, small size circle that has a win condition;
-
-About section;
-
-Features To Come section;
-
-How To Play section;
-
-FAQ section;
+About section, How to play section, back-end ranking system.
 
 Color Them All 2020.
