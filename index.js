@@ -399,8 +399,6 @@
     if (gameData.gamePlaying) {
       clickData = getClickData(e);
 
-      console.log(clickData)
-
       if (!clickData.clickedACircle) {
         restartCircleColour();
         resetScore();
