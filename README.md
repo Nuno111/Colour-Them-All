@@ -36,7 +36,11 @@ You can try the live version here: [Colour Them All](https://upbeat-hopper-d62a4
 
 * "Snitch Circle" - Similar to harry potter snitch, a high speed, small size circle that has a win condition.
 
+## In-game screenshots
+
 ![Colour Them All in-game screenshot 1](./screenshot1.png "Colour Them all in-game screenshot 1")
+
+
 ![Colour Them All in-game screenshot 2](./screenshot2.png "Colour Them all in-game screenshot 2")
 
 ### Colour Them All 2020.
