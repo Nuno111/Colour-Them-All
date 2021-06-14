@@ -2,7 +2,7 @@
 
 Colour Them All is a single player game i've created when learning the basics of javascript canvas.
 
-You can try the live verson here: [Colour Them All](https://upbeat-hopper-d62a44.netlify.app/https://www.example.com)
+You can try the live verson here: [Colour Them All](https://upbeat-hopper-d62a44.netlify.app)
 
 ## About the game
 
